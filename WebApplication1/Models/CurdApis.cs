@@ -9,11 +9,12 @@ namespace WebApplication1
     {
         public static void RegisterCrudEndPoints(this WebApplication app)
         {
-            var bookmarkGroup = app.MapGroup("/main");
-            bookmarkGroup.MapGet("/list/Patient", GetPatients);
-            bookmarkGroup.MapGet("/list/Order", GetOrders);
-            bookmarkGroup.MapPost("/add/Order", AddOrder);
-            bookmarkGroup.MapPut("/edit/Order/{id}", EditOrder);
+            var UrlGroup = app.MapGroup("/main");
+            UrlGroup.MapGet("/list/Patient", GetPatients);
+            UrlGroup.MapGet("/list/Order", GetOrders);
+            UrlGroup.MapPost("/add/Order", AddOrder);
+            UrlGroup.MapPut("/edit/Order", EditOrder);
+            UrlGroup.MapDelete("/edit/Delete/{id}", DeleteOrder);
         }
 
         private static async Task<Ok<Patient[]>> GetPatients(AppDbContext db)
@@ -45,7 +46,7 @@ namespace WebApplication1
             if (rv == null) return TypedResults.BadRequest(results);
             var isValid = Validator.TryValidateObject(order, new ValidationContext(order), results, true);
             if (!isValid) return TypedResults.BadRequest(results);
-            db.Order.Update(order);            
+            rv.Message = order.Message;
             await db.SaveChangesAsync();
             return TypedResults.Ok(order);
         }

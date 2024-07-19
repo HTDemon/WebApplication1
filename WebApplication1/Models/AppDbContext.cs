@@ -2,6 +2,7 @@
 using MongoDB.Driver;
 using MongoDB.EntityFrameworkCore.Extensions;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Numerics;
 
 namespace WebApplication1
@@ -32,6 +33,8 @@ namespace WebApplication1
 
     internal class Order
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [Required]
         [RegularExpression(@"^.{3,}")]
@@ -40,6 +43,8 @@ namespace WebApplication1
 
     internal class Patient
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [Required]
         [RegularExpression(@"^.{2,}")]
