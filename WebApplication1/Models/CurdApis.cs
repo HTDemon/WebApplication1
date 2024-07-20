@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OpenApi;
 
 namespace WebApplication1
 {
@@ -10,11 +12,11 @@ namespace WebApplication1
         public static void RegisterCrudEndPoints(this WebApplication app)
         {
             var UrlGroup = app.MapGroup("/main");
-            UrlGroup.MapGet("/list/Patient", GetPatients);
-            UrlGroup.MapGet("/list/Order", GetOrders);
-            UrlGroup.MapPost("/add/Order", AddOrder);
-            UrlGroup.MapPut("/edit/Order", EditOrder);
-            UrlGroup.MapDelete("/edit/Delete/{id}", DeleteOrder);
+            UrlGroup.MapGet("/list/Patient", GetPatients).WithTags("住民").WithName("GetPatientList").WithOpenApi();
+            UrlGroup.MapGet("/list/Order", GetOrders).WithTags("醫囑").WithName("GetOrderList").WithOpenApi();
+            UrlGroup.MapPost("/add/Order", AddOrder).WithTags("醫囑").WithName("AddOrder").WithOpenApi();
+            UrlGroup.MapPut("/edit/Order", EditOrder).WithTags("醫囑").WithName("EditOrder").WithOpenApi();
+            UrlGroup.MapDelete("/edit/Delete/{id}", DeleteOrder).WithTags("醫囑").WithName("DeleteOrder").WithOpenApi();
         }
 
         private static async Task<Ok<Patient[]>> GetPatients(AppDbContext db)

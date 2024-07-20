@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Xml.Linq;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using MongoDB.Driver;
 using WebApplication1;
 
@@ -14,16 +15,21 @@ builder.Services.AddDbContext<AppDbContext>(options => {
     options.UseMongoDB(mongoClient, "Main");
 });
 
+builder.Services.AddSwaggerGen(opt => {
+    opt.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "Interview Exam",
+        Description = "後端採用ASP.NET Core 建立 Minimal API並支援 OpenAPI 標準。"
+    });
+});
+
 var app = builder.Build();
 
-//app.UseFileServer(new FileServerOptions
-//{
-//    RequestPath = "",
-//    FileProvider = new Microsoft.Extensions.FileProviders
-//                    .ManifestEmbeddedFileProvider(
-//        typeof(Program).Assembly, "frontend"
-//    )
-//});
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 using (var scope = app.Services.CreateScope())
 {
@@ -48,6 +54,15 @@ using (var scope = app.Services.CreateScope())
         db.SaveChanges();
     }
 }
+
+app.UseFileServer(new FileServerOptions
+{
+    RequestPath = "",
+    FileProvider = new Microsoft.Extensions.FileProviders
+                    .ManifestEmbeddedFileProvider(
+        typeof(Program).Assembly, "frontend"
+    )
+});
 
 app.RegisterCrudEndPoints();
 

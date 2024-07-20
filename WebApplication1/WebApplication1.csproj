@@ -6,13 +6,24 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>61ac4922-54c0-4b86-9c95-426c0a86f266</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+	<GenerateEmbeddedFilesManifest>true</GenerateEmbeddedFilesManifest>
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="my-app\**" />
+    <Content Remove="my-app\**" />
+    <EmbeddedResource Remove="my-app\**" />
+    <None Remove="my-app\**" />
+	<EmbeddedResource Include="frontend\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.7" />
+    <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="8.0.7" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
     <PackageReference Include="MongoDB.EntityFrameworkCore" Version="8.0.3" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 
 </Project>
