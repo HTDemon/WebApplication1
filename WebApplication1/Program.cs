@@ -24,23 +24,23 @@ builder.Services.AddSwaggerGen(opt => {
     });
 });
 
+// 加入 CORS 服務
+const string OriginsFromSetting = "OriginsFromAppSettingsJson";
+builder.Services.AddCors(options => {
+    options.AddPolicy(
+        name: OriginsFromSetting,
+        builder => {
+            builder.WithOrigins(config.GetSection("AllowOrigins").Get<string[]>());
+        }
+    );
+});
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-
-    // 加入 CORS 服務
-    const string OriginsFromSetting = "OriginsFromAppSettingsJson";
-    builder.Services.AddCors(options => {
-        options.AddPolicy(
-            name: OriginsFromSetting,
-            builder => {
-                builder.WithOrigins(config.GetSection("AllowOrigins").Get<string[]>());
-            }
-        );
-    });
 
     app.UseCors(builder => builder
     .AllowAnyOrigin()
