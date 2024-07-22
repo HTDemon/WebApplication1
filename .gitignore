@@ -361,3 +361,11 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/WebApplication1/frontend/asset-manifest.json
+/WebApplication1/frontend/index.html
+/WebApplication1/frontend/static/js/main.4b27a5b0.js
+/WebApplication1/frontend/static/js/main.4b27a5b0.js.LICENSE.txt
+/WebApplication1/frontend/static/js/main.4b27a5b0.js.map
+/WebApplication1/frontend/static/js/main.7cdadb70.js
+/WebApplication1/frontend/static/js/main.7cdadb70.js.LICENSE.txt
+/WebApplication1/frontend/static/js/main.7cdadb70.js.map
