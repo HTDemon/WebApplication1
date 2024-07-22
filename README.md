@@ -50,8 +50,8 @@ if (!db.Patient.Any())
 ![image](https://github.com/HTDemon/WebApplication1/blob/master/WebApplication1/README/IE_2.gif)
 ---
 
-### 新增醫囑
-新增一筆醫囑後會將醫囑Id更新回Patient.OrderId
+### 新增醫囑 ###
+新增一筆後會將Id更新回Patient.OrderId
 ![image](https://github.com/HTDemon/WebApplication1/blob/master/WebApplication1/README/IE_3.gif)
 ---
 
