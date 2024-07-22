@@ -54,7 +54,7 @@ if (!db.Patient.Any())
 
 ### 新增醫囑
 ---
-`新增一筆後會將Id更新回Patient.OrderId`
+新增一筆後會將Id更新回Patient.OrderId  
 ![image](https://github.com/HTDemon/WebApplication1/blob/master/WebApplication1/README/IE_3.gif)
 
 
