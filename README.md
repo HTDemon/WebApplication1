@@ -5,7 +5,7 @@
 資料庫：MongoDB
 網站執行埠號：5017
 
-RCA build出的內容需要複製到frontend資料夾中作為靜態檔案  
+RCA npm run build產出的內容需要複製到frontend資料夾中作為靜態檔案  
 
 請將appsettings.json中的mongodb{ip}及{port}替換成自己的DB ip及port。
 ```
