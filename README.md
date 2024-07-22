@@ -1,5 +1,9 @@
 # 面試專案說明
 
+前端：React Creat App, material-ui  
+後端：ASP.NET(8.0) Core 建立 Minimal API並支援 OpenAPI 標準  
+資料庫：MongoDB  
+
 請將appsettings.json中的mongodb{ip}及{port}替換成自己的DB ip及port。
 ```
 {
@@ -49,12 +53,14 @@ if (!db.Patient.Any())
 
 ### 醫囑Dialog，編輯醫囑
 ---
+編輯後會關閉Dialog有點不方便  
 ![image](https://github.com/HTDemon/WebApplication1/blob/master/WebApplication1/README/IE_2.gif)
 
 
 ### 新增醫囑
 ---
 新增一筆後會將Id更新回Patient.OrderId  
+新增後會關閉Dialog有點不方便  
 ![image](https://github.com/HTDemon/WebApplication1/blob/master/WebApplication1/README/IE_3.gif)
 
 
