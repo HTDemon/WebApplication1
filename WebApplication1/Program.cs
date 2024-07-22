@@ -11,6 +11,8 @@ var builder = WebApplication.CreateBuilder(args);
 //var mongoClient = new MongoClient("<Your MongoDB Connection URI>");
 var mongoClient = new MongoClient("mongodb://10.24.20.181:32768");
 
+var config = builder.Configuration; // 取得 IConfiguration
+
 builder.Services.AddDbContext<AppDbContext>(options => {
     options.UseMongoDB(mongoClient, "Main");
 });
@@ -23,12 +25,31 @@ builder.Services.AddSwaggerGen(opt => {
     });
 });
 
+// 加入 CORS 服務
+const string OriginsFromSetting = "OriginsFromAppSettingsJson";
+builder.Services.AddCors(options => {
+    options.AddPolicy(
+        name: OriginsFromSetting,
+        builder => {
+            builder.WithOrigins(
+                // 轉 string[] 需要 Microsoft.Extensions.Configuration.Binder
+                config.GetSection("AllowOrigins").Get<string[]>());
+        }
+    );
+});
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+
+    app.UseCors(builder => builder
+    .AllowAnyOrigin()
+    .AllowAnyMethod()
+    .AllowAnyHeader()
+    );
 }
 
 using (var scope = app.Services.CreateScope())

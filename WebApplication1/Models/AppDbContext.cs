@@ -36,9 +36,8 @@ namespace WebApplication1
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        [Required]
         [RegularExpression(@"^.{3,}")]
-        public string Message { get; set; }
+        public required string Message { get; set; }
     }
 
     internal class Patient
@@ -46,10 +45,17 @@ namespace WebApplication1
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        [Required]
         [RegularExpression(@"^.{2,}")]
-        public string Name { get; set; }
+        public required string Name { get; set; }
         [Required]
         public int OrderId { get; set; }
+    }
+
+    internal class AddOrder
+    {
+        [Required]
+        public int PatientId { get; set; }
+        [RegularExpression(@"^.{3,}")]
+        public required string Message { get; set; }
     }
 }

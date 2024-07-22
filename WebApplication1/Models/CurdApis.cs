@@ -13,7 +13,7 @@ namespace WebApplication1
         {
             var UrlGroup = app.MapGroup("/main");
             UrlGroup.MapGet("/list/Patient", GetPatients).WithTags("住民").WithName("GetPatientList").WithOpenApi();
-            UrlGroup.MapGet("/list/Order", GetOrders).WithTags("醫囑").WithName("GetOrderList").WithOpenApi();
+            UrlGroup.MapGet("/get/Order/{id}", GetOrders).WithTags("醫囑").WithName("GetOrder").WithOpenApi();
             UrlGroup.MapPost("/add/Order", AddOrder).WithTags("醫囑").WithName("AddOrder").WithOpenApi();
             UrlGroup.MapPut("/edit/Order", EditOrder).WithTags("醫囑").WithName("EditOrder").WithOpenApi();
             UrlGroup.MapDelete("/edit/Delete/{id}", DeleteOrder).WithTags("醫囑").WithName("DeleteOrder").WithOpenApi();
@@ -25,20 +25,34 @@ namespace WebApplication1
             return TypedResults.Ok(list);
         }
 
-        private static async Task<Ok<Order[]>> GetOrders(AppDbContext db)
+        private static async Task<Ok<Order[]>> GetOrders(AppDbContext db, int id)
         {
-            var list = await db.Order.ToArrayAsync();
+            var list = await db.Order.Where(x => x.Id == id).ToArrayAsync();
             return TypedResults.Ok(list);
         }
 
-        private static async Task<Results<Ok<Order>, BadRequest<List<ValidationResult>>>> AddOrder(AppDbContext db, Order order)
+        private static async Task<Results<Ok<Order>, BadRequest<List<ValidationResult>>>> AddOrder(AppDbContext db, AddOrder addOrder)
         {
             var results = new List<ValidationResult>();
-            var isValid = Validator.TryValidateObject(order, new ValidationContext(order), results, true);
-            if (!isValid) return TypedResults.BadRequest(results);
-            db.Order.Add(order);
+            //var isValid = Validator.TryValidateObject(order, new ValidationContext(order), results, true);
+            //if (!isValid) return TypedResults.BadRequest(results);
+            var lastOrderId = db.Order.OrderByDescending(x => x.Id).FirstOrDefault();
+            var p = db.Patient.Where(x => x.Id == addOrder.PatientId).FirstOrDefault();
+
+            if (lastOrderId == null || addOrder.Message.Length == 0)
+            {
+                return TypedResults.BadRequest(results);
+            }
+            var nextOrderId = lastOrderId.Id + 1;
+            var o = new Order()
+            {
+                Id = nextOrderId,
+                Message = addOrder.Message.Trim()
+            };
+            db.Order.Add(o);
+            p.OrderId = nextOrderId;
             await db.SaveChangesAsync();
-            return TypedResults.Ok(order);
+            return TypedResults.Ok(o);
         }
 
         private static async Task<Results<Ok<Order>, BadRequest<List<ValidationResult>>>> EditOrder(AppDbContext db, Order order)
