@@ -71,3 +71,9 @@ if (!db.Patient.Any())
 ---
 ![image](https://github.com/HTDemon/WebApplication1/blob/master/WebApplication1/README/IE_4.gif)
 
+### 專案未來展望
+---
+1.讓新增/編輯醫囑後不用關閉醫囑Dialog
+2.前端新增/編輯加入正規化表示
+3.建置後端專案的時候能順便建置前端專案並將其產出放入frontend資料夾中
+4.將專案裝進Docker中
