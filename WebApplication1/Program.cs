@@ -1,17 +1,16 @@
 using System.ComponentModel.DataAnnotations;
 using System.Xml.Linq;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.OpenApi.Models;
 using MongoDB.Driver;
 using WebApplication1;
 
 
 var builder = WebApplication.CreateBuilder(args);
-
-//var mongoClient = new MongoClient("<Your MongoDB Connection URI>");
-var mongoClient = new MongoClient("mongodb://10.24.20.181:32768");
-
 var config = builder.Configuration; // 取得 IConfiguration
+var mongoDbSettings = config.GetSection("MongoDatabase:ConnectionString").Value;
+var mongoClient = new MongoClient(mongoDbSettings);
 
 builder.Services.AddDbContext<AppDbContext>(options => {
     options.UseMongoDB(mongoClient, "Main");
@@ -31,9 +30,7 @@ builder.Services.AddCors(options => {
     options.AddPolicy(
         name: OriginsFromSetting,
         builder => {
-            builder.WithOrigins(
-                // 轉 string[] 需要 Microsoft.Extensions.Configuration.Binder
-                config.GetSection("AllowOrigins").Get<string[]>());
+            builder.WithOrigins(config.GetSection("AllowOrigins").Get<string[]>());
         }
     );
 });
