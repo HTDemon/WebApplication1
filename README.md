@@ -1,6 +1,6 @@
 # 面試專案說明
 
-前端：React Creat App, material-ui  
+前端：React Creat App(RCA), material-ui  
 後端：ASP.NET(8.0) Core 建立 Minimal API並支援 OpenAPI 標準  
 資料庫：MongoDB
 網站執行埠號：5017
