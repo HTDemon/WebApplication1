@@ -2,7 +2,10 @@
 
 前端：React Creat App, material-ui  
 後端：ASP.NET(8.0) Core 建立 Minimal API並支援 OpenAPI 標準  
-資料庫：MongoDB  
+資料庫：MongoDB
+網站執行埠號：5017
+
+RCA build出的內容需要複製到frontend資料夾中作為靜態檔案  
 
 請將appsettings.json中的mongodb{ip}及{port}替換成自己的DB ip及port。
 ```
